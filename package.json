@@ -1,5 +1,5 @@
 {
-  "name": "sms-nodejs-client",
+  "name": "sms-altiria-client",
   "version": "1.0.0",
   "description": "Client library to send SMS using Altiria Gateway",
   "main": "src/altiria-client.js",
