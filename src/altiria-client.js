@@ -1,5 +1,6 @@
 const winston = require('winston');
 const http = require('http');
+const url = require('url');
 
 const GeneralAltiriaException = require('./exception/general-altiria-exception.js');
 const AltiriaGwException = require('./exception/altiria-gw-exception.js');
