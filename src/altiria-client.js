@@ -19,11 +19,7 @@ module.exports = class AltiriaClient {
         this._minTimeout=1000;
 
         // API URL
-        this._urlBase={
-            host: 'www.altiria.net',
-            port: '8443',
-            path: '/apirest/ws'
-        };
+        this._urlBase=url.parse('https://www.altiria.net/apirest/ws');
 
         this._source='lib-nodejs-npm-1_0'
 
