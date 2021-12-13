@@ -24,7 +24,7 @@ Altiria SMS NodeJs es un cliente que simplifica al máximo la integración de nu
 Mediante el gestor de dependencias **npm** ejecutando el siguiente comando:
 
 <pre>
-npm install sms-nodejs-client --save
+npm install sms-altiria-client --save
 </pre>
 
 
