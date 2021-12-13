@@ -1,10 +1,8 @@
 ![](http://static.altiria.com/wp-content/themes/altiria/images/logo-altiria.png)
 
-# VERSION EN DESARROLLO, NO USAR
-
 # Altiria, cliente NodeJs js
 
- ![](https://img.shields.io/badge/version-0.9.0-blue.svg)
+ ![](https://img.shields.io/badge/version-1.0.0-blue.svg)
 
 Altiria SMS NodeJs es un cliente que simplifica al máximo la integración de nuestro API para NodeJs. Por el momento, esta librería abarca las funciones más básicas:
 - **Envíos de SMS individuales** con las siguientes características:
