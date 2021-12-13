@@ -39,11 +39,11 @@ A continuación se describen cada una de las posibilidades de uso de la librerí
 Se trata de la opción más sencilla para realizar un envío de SMS.
 
 ```js
-const AltiriaClient = require('sms-nodejs-client/src/altiria-client');
-const AltiriaModelTextMessage = require('sms-nodejs-client/src/altiria-model-text-message');
-const AltiriaGwException = require('sms-nodejs-client/src/exception/altiria-gw-exception.js');
-const JsonException = require('sms-nodejs-client/src/exception/json-exception.js');
-const ConnectionException = require('sms-nodejs-client/src/exception/connection-exception.js');
+const AltiriaClient = require('sms-altiria-client/src/altiria-client');
+const AltiriaModelTextMessage = require('sms-altiria-client/src/altiria-model-text-message');
+const AltiriaGwException = require('sms-altiria-client/src/exception/altiria-gw-exception.js');
+const JsonException = require('sms-altiria-client/src/exception/json-exception.js');
+const ConnectionException = require('sms-altiria-client/src/exception/connection-exception.js');
 
 async function sendSms() {
 	try {
@@ -73,11 +73,11 @@ Permite fijar el tiempo de respuesta en milisegundos. Si se supera se lanzará u
 Por defecto el tiempo de respuesta es de 10 segundos, pero puede ser ajustado entre 1 y 30 segundos.
 
 ```js
-const AltiriaClient = require('sms-nodejs-client/src/altiria-client');
-const AltiriaModelTextMessage = require('sms-nodejs-client/src/altiria-model-text-message');
-const AltiriaGwException = require('sms-nodejs-client/src/exception/altiria-gw-exception.js');
-const JsonException = require('sms-nodejs-client/src/exception/json-exception.js');
-const ConnectionException = require('sms-nodejs-client/src/exception/connection-exception.js');
+const AltiriaClient = require('sms-altiria-client/src/altiria-client');
+const AltiriaModelTextMessage = require('sms-altiria-client/src/altiria-model-text-message');
+const AltiriaGwException = require('sms-altiria-client/src/exception/altiria-gw-exception.js');
+const JsonException = require('sms-altiria-client/src/exception/json-exception.js');
+const ConnectionException = require('sms-altiria-client/src/exception/connection-exception.js');
 
 async function sendSms() {
 	try {
@@ -106,11 +106,11 @@ sendSms();
 Se trata de la opción más sencilla para realizar un envío de SMS añadiendo remitente.
 
 ```js
-const AltiriaClient = require('sms-nodejs-client/src/altiria-client');
-const AltiriaModelTextMessage = require('sms-nodejs-client/src/altiria-model-text-message');
-const AltiriaGwException = require('sms-nodejs-client/src/exception/altiria-gw-exception.js');
-const JsonException = require('sms-nodejs-client/src/exception/json-exception.js');
-const ConnectionException = require('sms-nodejs-client/src/exception/connection-exception.js');
+const AltiriaClient = require('sms-altiria-client/src/altiria-client');
+const AltiriaModelTextMessage = require('sms-altiria-client/src/altiria-model-text-message');
+const AltiriaGwException = require('sms-altiria-client/src/exception/altiria-gw-exception.js');
+const JsonException = require('sms-altiria-client/src/exception/json-exception.js');
+const ConnectionException = require('sms-altiria-client/src/exception/connection-exception.js');
 
 async function sendSms() {
 	try {
@@ -138,11 +138,11 @@ sendSms();
 Se muestra un ejemplo utilizando todo los parámetros e integrando el módulo **winston** para habilitar el loggin de la librería.
 
 ```js
-const AltiriaClient = require('sms-nodejs-client/src/altiria-client');
-const AltiriaModelTextMessage = require('sms-nodejs-client/src/altiria-model-text-message');
-const AltiriaGwException = require('sms-nodejs-client/src/exception/altiria-gw-exception.js');
-const JsonException = require('sms-nodejs-client/src/exception/json-exception.js');
-const ConnectionException = require('sms-nodejs-client/src/exception/connection-exception.js');
+const AltiriaClient = require('sms-altiria-client/src/altiria-client');
+const AltiriaModelTextMessage = require('sms-altiria-client/src/altiria-model-text-message');
+const AltiriaGwException = require('sms-altiria-client/src/exception/altiria-gw-exception.js');
+const JsonException = require('sms-altiria-client/src/exception/json-exception.js');
+const ConnectionException = require('sms-altiria-client/src/exception/connection-exception.js');
 const winston = require('winston');
 
 async function sendSms() {
@@ -200,11 +200,11 @@ A continuación se describen cada una de las posibilidades de uso de la librerí
 Este ejemplo no incluye los parámetros opcionales.
 
 ```js
-const AltiriaClient = require('sms-nodejs-client/src/altiria-client');
-const AltiriaModelTextMessage = require('sms-nodejs-client/src/altiria-model-text-message');
-const AltiriaGwException = require('sms-nodejs-client/src/exception/altiria-gw-exception.js');
-const JsonException = require('sms-nodejs-client/src/exception/json-exception.js');
-const ConnectionException = require('sms-nodejs-client/src/exception/connection-exception.js');
+const AltiriaClient = require('sms-altiria-client/src/altiria-client');
+const AltiriaModelTextMessage = require('sms-altiria-client/src/altiria-model-text-message');
+const AltiriaGwException = require('sms-altiria-client/src/exception/altiria-gw-exception.js');
+const JsonException = require('sms-altiria-client/src/exception/json-exception.js');
+const ConnectionException = require('sms-altiria-client/src/exception/connection-exception.js');
 
 async function getCredit() {
 	try {
@@ -232,11 +232,11 @@ getCredit();
 Este ejemplo permite definir el timeout.
 
 ```js
-const AltiriaClient = require('sms-nodejs-client/src/altiria-client');
-const AltiriaModelTextMessage = require('sms-nodejs-client/src/altiria-model-text-message');
-const AltiriaGwException = require('sms-nodejs-client/src/exception/altiria-gw-exception.js');
-const JsonException = require('sms-nodejs-client/src/exception/json-exception.js');
-const ConnectionException = require('sms-nodejs-client/src/exception/connection-exception.js');
+const AltiriaClient = require('sms-altiria-client/src/altiria-client');
+const AltiriaModelTextMessage = require('sms-altiria-client/src/altiria-model-text-message');
+const AltiriaGwException = require('sms-altiria-client/src/exception/altiria-gw-exception.js');
+const JsonException = require('sms-altiria-client/src/exception/json-exception.js');
+const ConnectionException = require('sms-altiria-client/src/exception/connection-exception.js');
 
 async function getCredit() {
 	try {
