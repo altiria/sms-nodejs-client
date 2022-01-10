@@ -2,7 +2,7 @@
 
 # Altiria, cliente NodeJs js
 
- ![](https://img.shields.io/badge/version-1.0.1-blue.svg)
+ ![](https://img.shields.io/badge/version-1.0.2-blue.svg)
 
 Altiria SMS NodeJs es un cliente que simplifica al máximo la integración de nuestro API para NodeJs. Por el momento, esta librería abarca las funciones más básicas:
 - **Envíos de SMS individuales** con las siguientes características:
@@ -16,8 +16,8 @@ Altiria SMS NodeJs es un cliente que simplifica al máximo la integración de nu
 
 ## Requisitos
 
-- NodeJS: 9.4+
-- NPM: 5.6.0+
+- NodeJS: v14.18.1+
+- NPM: 8.3.0+
 
 ## Instalación
 
@@ -33,6 +33,22 @@ npm install sms-altiria-client --save
 ### Envío de SMS
 
 A continuación se describen cada una de las posibilidades de uso de la librería para realizar envíos de SMS.
+
+#### Ejemplo simplificado
+
+Se muestra el código indispensable para realizar un envío básico. No se gestionan las excepciones.
+
+```js
+const AltiriaClient = require('sms-altiria-client/src/altiria-client');
+const AltiriaModelTextMessage = require('sms-altiria-client/src/altiria-model-text-message');
+
+let altiriaClient = new AltiriaClient('miusuario@email.com', 'contraseña');
+let textMessage = new AltiriaModelTextMessage('346XXXXXXXX', 'Mensaje de prueba');
+(async () => {
+	const data = await altiriaClient.sendSms(textMessage);
+	console.log('Mensaje enviado: ',await data);
+})();
+```
 
 #### Ejemplo básico
 
