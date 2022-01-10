@@ -1,6 +1,5 @@
 const winston = require('winston');
-const http = require('http');
-const url = require('url');
+const axios = require('axios');
 
 const GeneralAltiriaException = require('./exception/general-altiria-exception.js');
 const AltiriaGwException = require('./exception/altiria-gw-exception.js');
@@ -13,14 +12,10 @@ module.exports = class AltiriaClient {
     constructor(login,password,timeout=10000) {
         this._login=login;
         this._password=password;
-        this._timeout=timeout;
-
-        // timeout values are defined here
-        this._maxTimeout=30000;
-        this._minTimeout=1000;
+        this.setTimeout=timeout;
 
         // API URL
-        this._urlBase=url.parse('https://www.altiria.net/apirest/ws');
+        this._urlBase='https://www.altiria.net:8443/apirest/ws';
 
         this._source='lib-nodejs-npm-1_0'
 
@@ -44,17 +39,17 @@ module.exports = class AltiriaClient {
     }
 
     /**
-     * Set the response timeout
+     * Set timeout
      */
     set setTimeout(timeout) {
-        if (timeout > this._maxTimeout)
-            this._timeout=10000;
-        else if (timeout < this._minTimeout)
-            this._timeout=10000;
+        if (timeout > 30000)
+            axios.defaults.timeout=10000;
+        else if (timeout < 1000)
+            axios.defaults.timeout=10000;
         else
-            this._timeout=timeout;    
+            axios.defaults.timeout=timeout;    
     }
-    
+
     /**
      * Send a SMS.
      * @param {*} textMessage SMS object
@@ -107,43 +102,33 @@ module.exports = class AltiriaClient {
                 message: messageObject,
                 source: this._source
             };
-
+            
             return new Promise((resolve, reject) => {
-                let options = {
-                    "method": "POST",
-                    "host": this._urlBase.host,
-                    "port": this._urlBase.port,
-                    "path": [this._urlBase.path + '/sendSms'],
-                    "headers": {
-                        "content-type": "application/json; charset=utf-8"
+                axios({
+                    method: 'post',
+                    url: this._urlBase + '/sendSms',
+                    data: JSON.stringify(jsonObject),
+                    headers: {'content-type': 'application/json; charset=utf-8'}
+                }).then(function (response) {
+                    logger.debug('HTTP status: '+response.status);
+                    logger.debug('HTTP body: '+JSON.stringify(response.data));
+                    const data = response.data;
+                    if (data.status != '000') {
+                        let errorMsg = getStatus(data.status);
+                        logger.error('ERROR: Invalid parameter. Error message: '+errorMsg + ', Status: '+data.status);
+                        reject(new AltiriaGwException(errorMsg,data.status));
                     }
-                };
-                let request =  http.request(options, function (response) {
-                    let data = undefined;
-                    response.on("data", function (body) {
-                        logger.debug('HTTP status: '+response.statusCode);
-                        logger.debug('HTTP body: '+body);
-                        data=JSON.parse(body);
-                    });
-                    response.on("end", function () {
-                        if (response.statusCode!=200) {
-                            logger.error('ERROR: Invalid request: '+data);
-                            reject(new JsonException(data.error));
-                        } else if (data.status != '000') {
-                            let errorMsg = getStatus(data.status);
-                            logger.error('ERROR: Invalid parameter. Error message: '+errorMsg + ', Status: '+data.status);
-                            reject(new AltiriaGwException(errorMsg,data.status));
-                        }
-                        resolve(data);
-                    });
+                    resolve(data);
+                }).catch(function (err) {
+                    if(err.message && err.message.includes('timeout')) {
+                        logger.error(err.message);
+                        reject(new ConnectionException('TIMEOUT_ERROR'));
+                    }else {
+                        logger.error('ERROR: Invalid request: '+JSON.stringify(err.response.data));
+                        reject(new JsonException(err.response.data.error));
+                    }
                 });
-                request.setTimeout(this._timeout, function( ) {
-                    reject(new ConnectionException('TIMEOUT_ERROR'));
-                });
-                request.write(JSON.stringify(jsonObject));
-                request.end();
             });
-
         }catch (err) {
             if(err instanceof GeneralAltiriaException) 
                 throw err;
@@ -174,41 +159,31 @@ module.exports = class AltiriaClient {
           };
 
           return new Promise((resolve, reject) => {
-              let options = {
-                  "method": "POST",
-                  "host": this._urlBase.host,
-                  "port": this._urlBase.port,
-                  "path": [this._urlBase.path + '/getCredit'],
-                  "headers": {
-                      "content-type": "application/json; charset=utf-8"
-                  }
-              };
-              let request =  http.request(options, function (response) {
-                  let data = undefined;
-                  response.on("data", function (body) {
-                      logger.debug('HTTP status: '+response.statusCode);
-                      logger.debug('HTTP body: '+body);
-                      data=JSON.parse(body);
-                  });
-                  response.on("end", function () {
-                      if (response.statusCode!=200) {
-                          logger.error('ERROR: Invalid request: '+data);
-                          reject(new JsonException(data.error));
-                      } else if (data.status != '000') {
-                          let errorMsg = getStatus(data.status);
-                          logger.error('ERROR: Invalid parameter. Error message: '+errorMsg + ', Status: '+data.status);
-                          reject(new AltiriaGwException(errorMsg,data.status));
-                      }
-                      resolve(data.credit);
-                  });
-              });
-              request.setTimeout(this._timeout, function( ) {
-                  reject(new ConnectionException('TIMEOUT_ERROR'));
-              });
-              request.write(JSON.stringify(jsonObject));
-              request.end();
-          });
-
+            axios({
+                method: 'post',
+                url: this._urlBase + '/getCredit',
+                data: JSON.stringify(jsonObject),
+                headers: {'content-type': 'application/json; charset=utf-8'}
+            }).then(function (response) {
+                logger.debug('HTTP status: '+response.status);
+                logger.debug('HTTP body: '+JSON.stringify(response.data));
+                const data = response.data;
+                if (data.status != '000') {
+                    let errorMsg = getStatus(data.status);
+                    logger.error('ERROR: Invalid parameter. Error message: '+errorMsg + ', Status: '+data.status);
+                    reject(new AltiriaGwException(errorMsg,data.status));
+                }
+                resolve(data.credit);
+            }).catch(function (err) {
+                if(err.message && err.message.includes('timeout')) {
+                    logger.error(err.message);
+                    reject(new ConnectionException('TIMEOUT_ERROR'));
+                }else {
+                    logger.error('ERROR: Invalid request: '+JSON.stringify(err.response.data));
+                    reject(new JsonException(err.response.data.error));
+                }
+            });
+        });
       }catch (err) {
           if(err instanceof GeneralAltiriaException) 
               throw err;
