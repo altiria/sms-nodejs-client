@@ -11,7 +11,7 @@ describe('GetCreditHttpTest', () => {
     /**
      * Basic case.
      */
-    test('testOk', async (done) => {
+    test('testOk', async () => {
         try {
             let altiriaClient = new AltiriaClient(login, password);
             let credit = await altiriaClient.getCredit();
@@ -19,28 +19,26 @@ describe('GetCreditHttpTest', () => {
             //Check your credit here
             //expect(credit).toEqual('100.00');
 
-            done();
         } catch (error) {
-            done.fail(new Error('Error: '+error));
+            throw new Error('Error: '+error);
         }
     });
 
     /**
      * Invalid credentials.
      */
-    test('testErrorInvalidCredentials', async (done) => {
+    test('testErrorInvalidCredentials', async () => {
         try {
             let altiriaClient = new AltiriaClient('unknown', password);
             await altiriaClient.getCredit();
 
-            done.fail(new Error('AltiriaGwException should have been thrown'));
+            throw new Error('AltiriaGwException should have been thrown');
         } catch (error) {
             if(error instanceof AltiriaGwException){
                 expect(error.getMessage).toEqual('AUTHENTICATION_ERROR');
                 expect(error.getStatus).toEqual('020');
-                done();
             }else 
-                done.fail(new Error('Error: '+error));
+                throw new Error('Error: '+error);
         }
     });
     
