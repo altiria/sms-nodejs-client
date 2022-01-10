@@ -11,36 +11,34 @@ describe('GetCreditAuthTest', () => {
     /**
      * The login parameter is missed.
      */
-    test('testErrorNoLogin', async (done) => {
+    test('testErrorNoLogin', async () => {
         try {
             let altiriaClient = new AltiriaClient(undefined, password);
             await altiriaClient.getCredit();
 
-            done.fail(new Error('JsonException should have been thrown'));
+            throw new Error('JsonException should have been thrown');
         } catch (error) {
             if(error instanceof JsonException){
                 expect(error.getMessage).toEqual('LOGIN_NOT_NULL');
-                done();
             }else 
-                done.fail(new Error('Error: '+error));
+                throw new Error('Error: '+error);
         }
     });
 
     /**
      * The password parameter is missed.
      */
-    test('testErrorNoPassword', async (done) => {
+    test('testErrorNoPassword', async () => {
         try {
             let altiriaClient = new AltiriaClient(login, undefined);
             await altiriaClient.getCredit();
 
-            done.fail(new Error('JsonException should have been thrown'));
+            throw new Error('JsonException should have been thrown');
         } catch (error) {
             if(error instanceof JsonException){
                 expect(error.getMessage).toEqual('PASSWORD_NOT_NULL');
-                done();
             }else 
-                done.fail(new Error('Error: '+error));
+                throw new Error('Error: '+error);
         }
     });
     
