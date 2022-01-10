@@ -1,6 +1,6 @@
 {
   "name": "sms-altiria-client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Client library to send SMS using Altiria Gateway",
   "main": "src/altiria-client.js",
   "files": [
@@ -36,11 +36,12 @@
   "author": "soporte@altiria.com",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.24.0",
     "winston": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "^8.3.0",
-    "jest": "^25.5.4"
+    "jest": "^27.4"
   },
   "eslintConfig": {
     "extends": "./node_modules/standard/eslintrc.json",
