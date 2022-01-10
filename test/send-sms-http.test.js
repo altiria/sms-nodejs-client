@@ -18,22 +18,17 @@ describe('SendSmsHttpTest', () => {
     /**
      * Only mandatory parameters are sent.
      */
-    test('testOkMandatoryParams', async (done) => {
-        try {
-            const message = 'Lorem Ipsum is simply dummy text';
+    test('testOkMandatoryParams', async () => {
+        
+        const message = 'Lorem Ipsum is simply dummy text';
 
-            let altiriaClient = new AltiriaClient(login, password);
-            let textMessage = new AltiriaModelTextMessage(destination, message);
-            let data = await altiriaClient.sendSms(textMessage);
+        let altiriaClient = new AltiriaClient(login, password);
+        let textMessage = new AltiriaModelTextMessage(destination, message);
+        let data = await altiriaClient.sendSms(textMessage);
 
-            expect(data.status).toEqual('000');
-            expect(data.details[0].destination).toEqual(destination);
-            expect(data.details[0].status).toEqual('000');
-
-            done();
-        } catch (error) {
-            done.fail(new Error('Error: '+error));
-        }
+        expect(data.status).toEqual('000');
+        expect(data.details[0].destination).toEqual(destination);
+        expect(data.details[0].status).toEqual('000');
     });
 
     /**
@@ -45,52 +40,47 @@ describe('SendSmsHttpTest', () => {
      * - set unicode encoding
      * - request delivery certificate
      */
-    test('testOkAllParams', async (done) => {
-        try {
-            const message = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry €';
-            const idAck = 'myAlias';
-            const encoding = 'unicode';
+    test('testOkAllParams', async () => {
+        
+        const message = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry €';
+        const idAck = 'myAlias';
+        const encoding = 'unicode';
 
-            let altiriaClient = new AltiriaClient(login, password);
-            let textMessage = new AltiriaModelTextMessage(destination, message, sender);
+        let altiriaClient = new AltiriaClient(login, password);
+        let textMessage = new AltiriaModelTextMessage(destination, message, sender);
 
-            // You can also assign the sender here
-            //textMessage.setSenderId=sender;
+        // You can also assign the sender here
+        //textMessage.setSenderId=sender;
 
-            // Need to configure a callback URL to use it. Contact comercial@altiria.com. 
-            //textMessage.setAck=true;
-            //textMessage.setIdAck=idAck;
+        // Need to configure a callback URL to use it. Contact comercial@altiria.com. 
+        //textMessage.setAck=true;
+        //textMessage.setIdAck=idAck;
 
-            textMessage.setConcat=true;
-            textMessage.setEncoding=encoding;
-      
-            // If it is uncommented, additional credit will be consumed.
-            //textMessage.setCertDelivery=true;
+        textMessage.setConcat=true;
+        textMessage.setEncoding=encoding;
+    
+        // If it is uncommented, additional credit will be consumed.
+        //textMessage.setCertDelivery=true;
 
-            let data = await altiriaClient.sendSms(textMessage);
+        let data = await altiriaClient.sendSms(textMessage);
 
-            expect(data.status).toEqual('000');
-            
-            expect(data.details[0].destination).toEqual(destination+'(0)');
-            expect(data.details[0].status).toEqual('000');
-            //Uncomment if idAck is used.
-            //expect(data.details[0].idAck).toEqual(idAck);
+        expect(data.status).toEqual('000');
+        
+        expect(data.details[0].destination).toEqual(destination+'(0)');
+        expect(data.details[0].status).toEqual('000');
+        //Uncomment if idAck is used.
+        //expect(data.details[0].idAck).toEqual(idAck);
 
-            expect(data.details[1].destination).toEqual(destination+'(1)');
-            expect(data.details[1].status).toEqual('000');
-            //Uncomment if idAck is used.
-            //expect(data.details[1].idAck).toEqual(idAck);
-
-            done();
-        } catch (error) {
-            done.fail(new Error('Error: '+error));
-        }
+        expect(data.details[1].destination).toEqual(destination+'(1)');
+        expect(data.details[1].status).toEqual('000');
+        //Uncomment if idAck is used.
+        //expect(data.details[1].idAck).toEqual(idAck);
     });
     
     /**
      * Invalid credentials.
      */
-    test('testErrorInvalidCredentials', async (done) => {
+    test('testErrorInvalidCredentials', async () => {
         try {
             const message = 'Lorem Ipsum is simply dummy text';
 
@@ -98,21 +88,20 @@ describe('SendSmsHttpTest', () => {
             let textMessage = new AltiriaModelTextMessage(destination, message);
             await altiriaClient.sendSms(textMessage);
 
-            done.fail(new Error('AltiriaGwException should have been thrown'));
+            throw new Error('AltiriaGwException should have been thrown');
         } catch (error) {
             if(error instanceof AltiriaGwException){
                 expect(error.getMessage).toEqual('AUTHENTICATION_ERROR');
                 expect(error.getStatus).toEqual('020');
-                done();
             }else 
-                done.fail(new Error('Error: '+error));
+                throw new Error('Error: '+error);
         }
     });
 
     /**
      * The destination parameter is invalid.
      */
-    test('testErrorInvalidDestination', async (done) => {
+    test('testErrorInvalidDestination', async () => {
         try {
             const message = 'Lorem Ipsum is simply dummy text';
             const invalidDestination = 'invalid';
@@ -121,21 +110,20 @@ describe('SendSmsHttpTest', () => {
             let textMessage = new AltiriaModelTextMessage(invalidDestination, message);
             await altiriaClient.sendSms(textMessage);
 
-            done.fail(new Error('AltiriaGwException should have been thrown'));
+            throw new Error('AltiriaGwException should have been thrown');
         } catch (error) {
             if(error instanceof AltiriaGwException){
                 expect(error.getMessage).toEqual('INVALID_DESTINATION');
                 expect(error.getStatus).toEqual('015');
-                done();
             }else 
-                done.fail(new Error('Error: '+error));
+                throw new Error('Error: '+error);
         }
     });
 
     /**
      * The message parameter is empty.
      */
-    test('testErrorEmptyMessage', async (done) => {
+    test('testErrorEmptyMessage', async () => {
         try {
             const message = '';
 
@@ -143,14 +131,13 @@ describe('SendSmsHttpTest', () => {
             let textMessage = new AltiriaModelTextMessage(destination, message);
             await altiriaClient.sendSms(textMessage);
 
-            done.fail(new Error('AltiriaGwException should have been thrown'));
+            throw new Error('AltiriaGwException should have been thrown');
         } catch (error) {
             if(error instanceof AltiriaGwException){
                 expect(error.getMessage).toEqual('EMPTY_MESSAGE');
                 expect(error.getStatus).toEqual('017');
-                done();
             }else 
-                done.fail(new Error('Error: '+error));
+                throw new Error('Error: '+error);
         }
     });
     
