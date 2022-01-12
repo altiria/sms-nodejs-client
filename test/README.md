@@ -7,7 +7,7 @@ Para poder utilizar nuestro servicio es necesario previamente crear una cuenta e
 
 Cabe mencionar que este proyecto consta de una **sección de tests** que al ser lanzados pueden suponer un **consumo de créditos**. En concreto, son los test "SendSmsHttpTest.testOkMandatoryParams" y "SendSmsHttpTest.testOkAllParams" que al ser lanzados consumirán un mínimo de tres créditos. Este consumo puede verse incrementado si se habilita la característica "certDelivery" comentada en el test "SendSmsHttpTest.testOkAllParams", para certificar la entrega del SMS.
 
-Antes de lanzar los tests es necesario **parametrizar cada suite** modificando las variables definidas bajo el comentario "configurable parameters".
+Antes de lanzar los tests es necesario instalar el proyecto mediante **npm install** y **parametrizar cada suite** modificando las variables definidas bajo el comentario "configurable parameters".
 Los parámetros a configurar son los siguientes:
 - login: email de la cuenta.
 - password: contraseña de la cuenta.
