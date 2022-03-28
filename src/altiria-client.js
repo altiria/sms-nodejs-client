@@ -9,9 +9,10 @@ const ConnectionException = require('./exception/connection-exception.js');
 
 module.exports = class AltiriaClient {
 
-    constructor(login,password,timeout=10000) {
+    constructor(login,password,isApiKey=false,timeout=10000) {
         this._login=login;
         this._password=password;
+        this._isApiKey=isApiKey;
         this.setTimeout=timeout;
 
         // API URL
@@ -59,6 +60,15 @@ module.exports = class AltiriaClient {
         logger.info('Altiria-sendSms CMD: '+textMessage.toString());
 
         try {
+            if (!this._login) {
+                logger.error("ERROR: The login parameter is mandatory");
+                throw new JsonException('LOGIN_NOT_NULL');
+            }
+            if (!this._password) {
+                logger.error("ERROR: The password parameter is mandatory");
+                throw new JsonException('PASSWORD_NOT_NULL');
+            }
+
             let destinations=[];
             if (!textMessage.getDestination) {
                 logger.error('ERROR: The destination parameter is mandatory');
@@ -91,9 +101,11 @@ module.exports = class AltiriaClient {
             if (textMessage.getEncoding && textMessage.getEncoding=='unicode')
                 messageObject.encoding='unicode';
 
+            let loginKey = this._isApiKey ? 'apikey' : 'login';
+            let passwordKey = this._isApiKey ? 'apisecret' : 'passwd';
             let credentialsObject={
-                login: this._login,
-                passwd: this._password
+                [loginKey]: this._login,
+                [passwordKey]: this._password
             };
 
             let jsonObject={
@@ -148,9 +160,20 @@ module.exports = class AltiriaClient {
       logger.info('Altiria-getCredit CMD');
 
       try {
+          if (!this._login) {
+              logger.error("ERROR: The login parameter is mandatory");
+              throw new JsonException('LOGIN_NOT_NULL');
+          }
+          if (!this._password) {
+              logger.error("ERROR: The password parameter is mandatory");
+              throw new JsonException('PASSWORD_NOT_NULL');
+          }
+
+          let loginKey = this._isApiKey ? 'apikey' : 'login';
+          let passwordKey = this._isApiKey ? 'apisecret' : 'passwd';
           let credentialsObject={
-              login: this._login,
-              passwd: this._password
+              [loginKey]: this._login,
+              [passwordKey]: this._password
           };
 
           let jsonObject={

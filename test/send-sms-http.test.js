@@ -11,6 +11,8 @@ describe('SendSmsHttpTest', () => {
     //configurable parameters
     const login = 'user@mydomain.com';
     const password = 'mypassword';
+    const apiKey = 'XXXXXXXXXX';
+    const apiSecret = 'YYYYYYYYYY';
     //set to undefined if there is no sender
     const sender = 'mySender';
     const destination = '346XXXXXXXX';
@@ -34,6 +36,7 @@ describe('SendSmsHttpTest', () => {
     /**
      * All params are sent.
      * Features:
+     * - apikey authentication
      * - sender
      * - delivery confirmation with identifier
      * - concatenated
@@ -46,7 +49,7 @@ describe('SendSmsHttpTest', () => {
         const idAck = 'myAlias';
         const encoding = 'unicode';
 
-        let altiriaClient = new AltiriaClient(login, password);
+        let altiriaClient = new AltiriaClient(apiKey, apiSecret, true);
         let textMessage = new AltiriaModelTextMessage(destination, message, sender);
 
         // You can also assign the sender here

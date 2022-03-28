@@ -7,6 +7,8 @@ describe('GetCreditHttpTest', () => {
     //configurable parameters
     const login = 'user@mydomain.com';
     const password = 'mypassword';
+    const apiKey = 'XXXXXXXXXX';
+    const apiSecret = 'YYYYYYYYYY';
 
     /**
      * Basic case.
@@ -14,6 +16,22 @@ describe('GetCreditHttpTest', () => {
     test('testOk', async () => {
         try {
             let altiriaClient = new AltiriaClient(login, password);
+            let credit = await altiriaClient.getCredit();
+
+            //Check your credit here
+            //expect(credit).toEqual('100.00');
+
+        } catch (error) {
+            throw new Error('Error: '+error);
+        }
+    });
+
+    /**
+     * Basic case using apikey.
+     */
+    test('testOkApikey', async () => {
+        try {
+            let altiriaClient = new AltiriaClient(apiKey, apiSecret, true);
             let credit = await altiriaClient.getCredit();
 
             //Check your credit here
