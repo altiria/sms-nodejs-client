@@ -11,6 +11,9 @@
 # KDE directory preferences
 .directory
 
+# Eclipse Core
+.project
+
 # Linux trash folder which might appear on any partition or disk
 .Trash-*
 
