@@ -119,7 +119,7 @@ sendSms();
 
 #### Ejemplo básico con remitente
 
-Se trata de la opción más sencilla para realizar un envío de SMS añadiendo remitente. En este caso, se ilustra cómo realizar una autentificación mediante APIKEY, donde "XXXXXXXXXX" es el parámetro **apiKey** y "YYYYYYYYYY" el parámetro **apiSecret**.
+Se trata de la opción más sencilla para realizar un envío de SMS añadiendo remitente. En este caso, se ilustra cómo realizar la autentificación mediante APIKEY, donde "XXXXXXXXXX" es el parámetro **apiKey** y "YYYYYYYYYY" el parámetro **apiSecret**.
 
 ```js
 const AltiriaClient = require('sms-altiria-client/src/altiria-client');
