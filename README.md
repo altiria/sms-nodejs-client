@@ -2,7 +2,7 @@
 
 # Altiria, cliente NodeJs js
 
- ![](https://img.shields.io/badge/version-1.0.2-blue.svg)
+ ![](https://img.shields.io/badge/version-1.0.3-blue.svg)
 
 Altiria SMS NodeJs es un cliente que simplifica al máximo la integración de nuestro API para NodeJs. Por el momento, esta librería abarca las funciones más básicas:
 - **Envíos de SMS individuales** con las siguientes características:
@@ -97,7 +97,7 @@ const ConnectionException = require('sms-altiria-client/src/exception/connection
 
 async function sendSms() {
 	try {
-	    let altiriaClient = new AltiriaClient('miusuario@email.com', 'contraseña', 5000);
+	    let altiriaClient = new AltiriaClient('miusuario@email.com', 'contraseña', false, 5000);
 	    let textMessage = new AltiriaModelTextMessage('346XXXXXXXX', 'Mensaje de prueba');
 	    let data = await altiriaClient.sendSms(textMessage);
 	    console.log('¡Mensaje enviado!');
@@ -119,7 +119,7 @@ sendSms();
 
 #### Ejemplo básico con remitente
 
-Se trata de la opción más sencilla para realizar un envío de SMS añadiendo remitente.
+Se trata de la opción más sencilla para realizar un envío de SMS añadiendo remitente. En este caso, se ilustra cómo realizar una autentificación mediante APIKEY, donde "XXXXXXXXXX" es el parámetro **apiKey** y "YYYYYYYYYY" el parámetro **apiSecret**.
 
 ```js
 const AltiriaClient = require('sms-altiria-client/src/altiria-client');
@@ -130,7 +130,7 @@ const ConnectionException = require('sms-altiria-client/src/exception/connection
 
 async function sendSms() {
 	try {
-	    let altiriaClient = new AltiriaClient('miusuario@email.com', 'contraseña');
+	    let altiriaClient = new AltiriaClient('XXXXXXXXXX', 'YYYYYYYYYY', true);
 	    let textMessage = new AltiriaModelTextMessage('346XXXXXXXX', 'Mensaje de prueba', 'miRemitente');
 	    let data = await altiriaClient.sendSms(textMessage);
 	    console.log('¡Mensaje enviado!');
@@ -256,7 +256,7 @@ const ConnectionException = require('sms-altiria-client/src/exception/connection
 
 async function getCredit() {
 	try {
-		let altiriaClient = new AltiriaClient('miusuario@email.com', 'contraseña', 5000);
+	    let altiriaClient = new AltiriaClient('miusuario@email.com', 'contraseña', false, 5000);
 	    let credit = await altiriaClient.getCredit();
 	    console.log('Credito: ',credit);
 
